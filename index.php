@@ -10,10 +10,8 @@
 
 	<?php
 	class CSVForm {
-
 		public function __construct() {
 		}
-
 		//Function to add uploaded file to server
 		public function saveToServer($file, $target) {
 			//Will check if file exist.
@@ -28,37 +26,85 @@
 				}
 			}	
 		}
-
 		//Function to redirect index page to display page.
 		public function redirect($file) {
-			header('Location: display.php?fileName='.$file);
+			header('Location: index.php?fileName='.$file);
 		}
 	}
 
+	class TableDisplay {
+		public function __construct() {
+		}
+		
+		//Function to generate table to display file data
+		public function generateTable($myfile) {
+			//Open the uploaded file and get the reference
+			$file = fopen('uploads/'.$myfile,'r');
+			
+			//fetch CVS file and parse first line as a column header.
+			$headings = fgetcsv($file,',');
+			echo "<table class=\"table\">";
+			echo "<tr>";
+			//Parse through each column value on single line
+			foreach ($headings as $title) {
+				echo "<th>".$title."</th>";
+			}
+			echo "</tr>";
+			//Fetch rest of the data line by line
+			while(! feof($file))
+  			{
+  				echo "<tr>";
+  				//Fetch each value in a single line/row
+  				$data = fgetcsv($file);
+  				foreach ($data as $value) {
+  					echo "<td>".$value."</td>";
+  				}
+  				echo "</tr>";
+  			}
+			echo "</table>";
+			
+			//Closing the opened file.
+			fclose($file);
+		}
+	}
+
+
 	?>
 	
-	<div class="container">
-    <h1></h1>
-    <div class="row">
-    <div class="col-sm-1"></div>
-    <div class="col-sm-10">
-    <form class="form-horizontal" action="" method="post" enctype="multipart/form-data">
-		<div class="form-group">
-		  <label class="control-label col-sm-2">Selected CSV File:</label>
-		  <div class="col-sm-10">          
-			<input class="form-control" type="file" name="csvFile" id="csvFile">
-		  </div>
-		</div>
-		<div class="form-group">        
-		  <div class="col-sm-offset-2 col-sm-10">
-			<button class="btn btn-default" type="submit" name="submit">Upload</button>
-		  </div>
-		</div>
-	  </form>
-	</div>
-    <div class="col-sm-2"></div>
-   </div>
-   </div>
+	<?php
+	if(isset($_GET["fileName"])) {
+		$filename = $_GET["fileName"];
+		if($filename != "") {
+			$Ob = new TableDisplay();
+			$Ob->generateTable($filename);
+		}else {
+			echo "<h1>Filename not valid!</h1>";	
+		}
+	}else {
+		echo "<div class=\"container\">";
+			echo "<h1></h1>";
+			echo "<div class=\"row\">";
+				echo "<div class=\"col-sm-1\"></div>";
+				echo "<div class=\"col-sm-10\">";
+					echo "<form class=\"form-horizontal\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">";
+						echo "<div class=\"form-group\">";
+							echo "<label class=\"control-label col-sm-2\">Selected CSV File:</label>";
+							echo "<div class=\"col-sm-10\">";          
+								echo "<input class=\"form-control\" type=\"file\" name=\"csvFile\" id=\"csvFile\">";
+							echo "</div>";
+						echo "</div>";
+						echo "<div class=\"form-group\">";        
+							echo "<div class=\"col-sm-offset-2 col-sm-10\">";
+								echo "<button class=\"btn btn-default\" type=\"submit\" name=\"submit\">Upload</button>";
+							echo "</div>";
+						echo "</div>";
+					echo "</form>";
+				echo "</div>";
+				echo "<div class=\"col-sm-2\"></div>";
+			echo "</div>";
+		echo "</div>";
+	}
+	?>
 	
 
 	<?php
@@ -69,7 +115,6 @@
 	//Make target path for file
 	$target_file = $target_dir . basename($_FILES["csvFile"]["name"]);
 	$myOb = new CSVForm();
-
 	//Will check for response from server
 	if(isset($_POST["submit"])) {
 		$myOb->saveToServer($_FILES["csvFile"],$target_file);

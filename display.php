@@ -14,7 +14,6 @@
 		
 		//Function to generate table to display file data
 		public function generateTable($myfile) {
-
 			//Open the uploaded file and get the reference
 			$file = fopen('uploads/'.$myfile,'r');
 			
