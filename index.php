@@ -1,13 +1,9 @@
 <html>
 <head>
 	<title>Upload CSV File</title>
-	<!-- Latest compiled and minified CSS -->
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-	<!-- jQuery library -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-	<!-- Latest compiled JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
@@ -67,7 +63,10 @@
 
 	<?php
 	
+	//Get directory for uploads.
 	$target_dir = "uploads/";
+	
+	//Make target path for file
 	$target_file = $target_dir . basename($_FILES["csvFile"]["name"]);
 	$myOb = new CSVForm();
 
@@ -76,8 +75,6 @@
 		$myOb->saveToServer($_FILES["csvFile"],$target_file);
 		$myOb->redirect($_FILES["csvFile"]["name"]);
 	}
-
-	
 	?>
 
 </body>
