@@ -28,7 +28,7 @@
 		}
 		//Function to redirect index page to display page.
 		public function redirect($file) {
-			header('Location: index.php?fileName='.$file);
+			header('Location: index.php?page=table&fileName='.$file);
 		}
 	}
 
