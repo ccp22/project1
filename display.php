@@ -50,10 +50,14 @@
 	//Check for appropriate parameter by get method.
 	if (isset($_GET["fileName"])) {
 		$filename = $_GET["fileName"];
-		$myOb = new TableDisplay();
-		$myOb->generateTable($filename);
+		if($filename != "") {
+			$myOb = new TableDisplay();
+			$myOb->generateTable($filename);
+		}else {
+			echo "<h1>Filename not valid!</h1>";	
+		}
 	}else{
-		echo "<h1>Not found!</h1>";
+		echo "<h1>File Not found!</h1>";
 	}	
 	?>
 </body>
