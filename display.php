@@ -57,7 +57,7 @@
 			echo "<h1>Filename not valid!</h1>";	
 		}
 	}else{
-		echo "<h1>File Not found!</h1>";
+		echo "<h1>Invalid request!</h1>";
 	}	
 	?>
 </body>
