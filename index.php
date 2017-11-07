@@ -88,7 +88,7 @@
 				echo "<div class=\"col-sm-10\">";
 					echo "<form class=\"form-horizontal\" action=\"\" method=\"post\" enctype=\"multipart/form-data\">";
 						echo "<div class=\"form-group\">";
-							echo "<label class=\"control-label col-sm-2\">Selected CSV File:</label>";
+							echo "<label class=\"control-label col-sm-2\">Select CSV File:</label>";
 							echo "<div class=\"col-sm-10\">";          
 								echo "<input class=\"form-control\" type=\"file\" name=\"csvFile\" id=\"csvFile\">";
 							echo "</div>";
